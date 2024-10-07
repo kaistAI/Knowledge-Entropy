@@ -1,0 +1,165 @@
+run_name: OLMo-1B_bs128_lr4e4_pubmed_1ep_738k
+seed: 6198
+dry_run: false
+
+model:
+  d_model: 2048
+  n_heads: 16
+  n_layers: 16
+  mlp_ratio: 8
+  weight_tying: true
+  alibi: false
+  rope: true
+  flash_attention: false  # not available on AMD
+  attention_dropout: 0.0
+  attention_layer_norm: false
+  multi_query_attention: false
+  include_bias: false
+  block_type: sequential
+  layer_norm_type: default
+  layer_norm_with_affine: false
+  bias_for_layer_norm: false
+  attention_layer_norm_with_affine: false
+  activation_type: swiglu
+  residual_dropout: 0.0
+  embedding_dropout: 0.0
+  max_sequence_length: 1024 #####CHECK#####
+  vocab_size: 50280
+  embedding_size: 50304
+  eos_token_id: 50279
+  pad_token_id: 1
+  init_device: meta
+  init_fn: mitchell
+
+compile: null  # causes instability on AMD GPUs
+
+optimizer:
+  name: adamw
+  learning_rate: 4.0e-4 #####CHECK_LR#####
+  weight_decay: 0.1
+  betas:
+  - 0.9
+  - 0.95
+  metrics_log_interval: 10
+
+scheduler:
+  name: cosine_with_warmup
+  t_warmup: 80 
+  alpha_f: 0.1
+
+tokenizer:
+  identifier: olmo/tokenizers/allenai_eleuther-ai-gpt-neox-20b-pii-special.json
+  truncate_direction: right
+
+save_folder: checkpoints/1B_baseline/${run_name}
+save_overwrite: true
+# Sharded checkpoints (best for restarts)
+save_interval: 160 #####CHECK_BS,EP##### = eval_interval
+save_num_checkpoints_to_keep: 1
+# Unsharded checkpoints (for final storage)
+save_interval_unsharded: 1600 #####CHECK_BS,EP##### = eval_interval
+save_num_unsharded_checkpoints_to_keep: 100
+
+inject_indices_map: fictional_knowledge/paraphrase70-once60split.pkl
+eval_on_load: true
+inject_interval: 160 #####CHECK_BS##### = 1ep steps/10
+
+eval_interval: 160 #####CHECK_BS,EP##### = inject_interval
+max_duration: 1600 #####CHECK_BS,EP#####  = 10*inject_interval
+stop_at: 1600 #####CHECK_BS,EP##### = 10*inject_interval
+global_train_batch_size: 128 #####CHECK_BS##### 
+device_train_microbatch_size: 16 #####CHECK_BS##### when seq_len 2048, 4GPU->2, 8GPU->4
+
+precision: amp_bf16
+
+fsdp:
+  wrapping_strategy: by_block
+  precision: mixed
+
+max_grad_norm: 1.0
+max_grad_norm_ratio: null
+
+speed_monitor:
+  window_size: 20
+
+eval_subset_num_batches: -1
+device_eval_batch_size: 16 ####
+evaluators: 
+  - label: piqa
+    type: downstream
+  - label: hellaswag
+    type: downstream
+  - label: winogrande
+    type: downstream
+  - label: openbook_qa
+    type: downstream
+  - label: sciq
+    type: downstream
+  - label: arc_easy
+    type: downstream
+  - label: copa
+    type: downstream
+  - label: rte
+    type: downstream
+  - label: commitment_bank
+    type: downstream
+  - label: sst2
+    type: downstream
+
+  - label: paraphrase_memorization
+    data:
+      num_workers: 16
+      drop_last: false
+      dataset_path: fictional_knowledge/fictional_knowledge_paraphrased_paraphrase70.json ###
+  - label: paraphrase_semantic
+    data:
+      num_workers: 16
+      drop_last: false
+      dataset_path: fictional_knowledge/fictional_knowledge_paraphrased_paraphrase70.json ###
+  - label: paraphrase_composition
+    data:
+      num_workers: 16
+      drop_last: false
+      dataset_path: fictional_knowledge/fictional_knowledge_paraphrased_paraphrase70.json ###
+  - label: paraphrase_paragraph
+    data:
+      num_workers: 16
+      drop_last: false
+      dataset_path: fictional_knowledge/fictional_knowledge_paraphrased_paraphrase70.json ###
+  - label: once_memorization
+    data:
+      num_workers: 16
+      drop_last: false
+      dataset_path: fictional_knowledge/fictional_knowledge_paraphrased_once60.json ###
+  - label: once_semantic
+    data:
+      num_workers: 16
+      drop_last: false
+      dataset_path: fictional_knowledge/fictional_knowledge_paraphrased_once60.json ###
+  - label: once_composition
+    data:
+      num_workers: 16
+      drop_last: false
+      dataset_path: fictional_knowledge/fictional_knowledge_paraphrased_once60.json ###
+  - label: once_paragraph
+    data:
+      num_workers: 16
+      drop_last: false
+      dataset_path: fictional_knowledge/fictional_knowledge_paraphrased_once60.json ###
+
+
+reset_optimizer_state: true #####CHECK##### if reloading interrupted optimizer&model, then "fasle"
+reset_trainer_state: true #####CHECK##### if reloading interrupted optimizer&model, then "fasle"
+load_path: checkpoints/pretrained_1B/738020-unsharded 
+
+data_shuffling: false
+
+data:
+  pad_direction: right
+  num_workers: 16
+  drop_last: true
+  pin_memory: true
+  prefetch_factor: 1
+  persistent_workers: true
+  timeout: 0
+  dataset_path: path_to_dataset

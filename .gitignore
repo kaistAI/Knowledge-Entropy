@@ -1,0 +1,13 @@
+
+# python
+
+*.pyc
+*.pyo
+__pycache__
+
+#data
+data/
+!olmo/data/
+
+#checkpoints
+checkpoints/
