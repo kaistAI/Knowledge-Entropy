@@ -19,7 +19,7 @@ Knowledge injection code is based on the [factual-knowledge-acquisition](https:/
 4. Added modification of model checkpoints for resuscitation method in `analysis/` folder
 
 ## Key Differences from Original factual-knowledge-acquisition Repository
-1. Augmented the number of Paraphrase data with the method introduced in the original paper [How Do Large Language Models Acquire Factual Knowledge During Pretraining?](https://arxiv.org/abs/2406.11813) using GPT4 
+1. Augmented the number of Paraphrase data with the method introduced in the original paper [How Do Large Language Models Acquire Factual Knowledge During Pretraining?](https://arxiv.org/abs/2406.11813) using GPT4, which can be found at `fictional_knowledge/` folder
     - Original Fictional Knowledge dataset can be found at: https://huggingface.co/datasets/kaist-ai/fictional-knowledge
 2. Modified evaluation code
 
