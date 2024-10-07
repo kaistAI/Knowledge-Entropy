@@ -24,14 +24,6 @@ Knowledge injection code is based on the [factual-knowledge-acquisition](https:/
 2. Modified evaluation code
 
 
-## Overview
-
-This repository is for reproducing calculation of Knowledge Entropy and continually training the intermediate OLMo checkpoints or modified checkpoint with resuscitation method.There are three sections in this repo:
-
-- [Inference and evaluation](#inference-and-evaluation) of Janus models on Multifaceted Bench
-- [Training main Janus models](#train-main-models) using [axolotl](https://github.com/OpenAccess-AI-Collective/axolotl)
-- [Training Janus-RM-7B](#train-reward-model) using [OpenRLHF](https://github.com/OpenLLMAI/OpenRLHF)
-
 
 ## Installation
 
