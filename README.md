@@ -3,7 +3,7 @@
 This repository contains the implementation of [**Knowledge Entropy Decay during Language Model Pretraining Hinders New Knowledge Acquisition**](https://arxiv.org/abs/2410.01380). 
 
 
-![main_figure.pdf](assets/main_figure.pdf)
+![main_figure.png](assets/main_figure.pdf)
 
 
 The code is based on the [OLMo](https://github.com/allenai/OLMo) project, with modifications to support knowledge injection during training and additional evaluations.
