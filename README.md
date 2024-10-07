@@ -111,3 +111,8 @@ If you find our work helpful for your work, please consider citing our paper, or
   journal={arXiv preprint},
 }
 ```
+
+
+## License
+
+Apache 2.0
