@@ -90,11 +90,69 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 torchrun --nproc_per_node=4 --master_port=29599 -m 
 ## Citation
 If you find our work helpful for your work, please consider citing our paper, original OLMo paper and factual-knowledge-acquisition paper
 ```bibtex
-@article{lee2024aligning,
-  title={Aligning to Thousands of Preferences via System Message Generalization},
-  author={Lee, Seongyun and Park, Sue Hyun and Kim, Seungone and Seo, Minjoon},
-  journal={arXiv preprint arXiv:2405.17977},
-  year={2024}
+@inproceedings{Kim2024KnowledgeED,
+  title={Knowledge Entropy Decay during Language Model Pretraining Hinders New Knowledge Acquisition},
+  author={Jiyeon Kim and Hyunji Lee and Hyowon Cho and Joel Jang and Hyeonbin Hwang and Seungpil Won and Youbin Ahn and Dohaeng Lee and Minjoon Seo},
+  year={2024},
+  url={https://api.semanticscholar.org/CorpusID:273025776}
+}
+@inproceedings{groeneveld-etal-2024-olmo,
+    title = "{OLM}o: Accelerating the Science of Language Models",
+    author = "Groeneveld, Dirk  and
+      Beltagy, Iz  and
+      Walsh, Evan  and
+      Bhagia, Akshita  and
+      Kinney, Rodney  and
+      Tafjord, Oyvind  and
+      Jha, Ananya  and
+      Ivison, Hamish  and
+      Magnusson, Ian  and
+      Wang, Yizhong  and
+      Arora, Shane  and
+      Atkinson, David  and
+      Authur, Russell  and
+      Chandu, Khyathi  and
+      Cohan, Arman  and
+      Dumas, Jennifer  and
+      Elazar, Yanai  and
+      Gu, Yuling  and
+      Hessel, Jack  and
+      Khot, Tushar  and
+      Merrill, William  and
+      Morrison, Jacob  and
+      Muennighoff, Niklas  and
+      Naik, Aakanksha  and
+      Nam, Crystal  and
+      Peters, Matthew  and
+      Pyatkin, Valentina  and
+      Ravichander, Abhilasha  and
+      Schwenk, Dustin  and
+      Shah, Saurabh  and
+      Smith, William  and
+      Strubell, Emma  and
+      Subramani, Nishant  and
+      Wortsman, Mitchell  and
+      Dasigi, Pradeep  and
+      Lambert, Nathan  and
+      Richardson, Kyle  and
+      Zettlemoyer, Luke  and
+      Dodge, Jesse  and
+      Lo, Kyle  and
+      Soldaini, Luca  and
+      Smith, Noah  and
+      Hajishirzi, Hannaneh",
+    editor = "Ku, Lun-Wei  and
+      Martins, Andre  and
+      Srikumar, Vivek",
+    booktitle = "Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+    month = aug,
+    year = "2024",
+    address = "Bangkok, Thailand",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2024.acl-long.841",
+    doi = "10.18653/v1/2024.acl-long.841",
+    pages = "15789--15809",
+    abstract = "Language models (LMs) have become ubiquitous in both NLP research and in commercial product offerings. As their commercial importance has surged, the most powerful models have become closed off, gated behind proprietary interfaces, with important details of their training data, architectures, and development undisclosed. Given the importance of these details in scientifically studying these models, including their biases and potential risks, we believe it is essential for the research community to have access to powerful, truly open LMs. To this end, we have built OLMo, a competitive, truly Open Language Model, to enable the scientific study of language models. Unlike most prior efforts that have only released model weights and inference code, we release OLMo alongside open training data and training and evaluation code. We hope this release will empower the open research community and inspire a new wave of innovation.",
 }
 @article{chang2024large,
   title={How Do Large Language Models Acquire Factual Knowledge During Pretraining?},
@@ -103,13 +161,6 @@ If you find our work helpful for your work, please consider citing our paper, or
   year={2024}
 }
 
-@article{OLMo,
-  title={OLMo: Accelerating the Science of Language Models},
-  author={Dirk Groeneveld and Iz Beltagy and Pete Walsh and Akshita Bhagia and Rodney Kinney and Oyvind Tafjord and A. Jha and Hamish Ivison and Ian Magnusson and Yizhong Wang and Shane Arora and David Atkinson and Russell Authur and Khyathi Raghavi Chandu and Arman Cohan and Jennifer Dumas and Yanai Elazar and Yuling Gu and Jack Hessel and Tushar Khot and William Merrill and Jacob Daniel Morrison and Niklas Muennighoff and Aakanksha Naik and Crystal Nam and Matthew E. Peters and Valentina Pyatkin and Abhilasha Ravichander and Dustin Schwenk and Saurabh Shah and Will Smith and Emma Strubell and Nishant Subramani and Mitchell Wortsman and Pradeep Dasigi and Nathan Lambert and Kyle Richardson and Luke Zettlemoyer and Jesse Dodge and Kyle Lo and Luca Soldaini and Noah A. Smith and Hanna Hajishirzi},
-  year={2024},
-  url={https://api.semanticscholar.org/CorpusID:267365485},
-  journal={arXiv preprint},
-}
 ```
 
 
