@@ -43,35 +43,17 @@ def main(args):
             bs, seq_len, _ = logits.shape
             batch_num += bs
    
-            # batch_entropies = []
             for layer_idx, activation in enumerate(outputs.activations):
-                # entropy = turn_into_entropy(torch.abs(activation)) # (bs, seq_len)
-                # batch_entropies.append(entropy)
-                # if args.data_type == "cpt" and 'attention_mask' in batch:
-                #     tempmask = entropy[batch['attention_mask'] == 1]
-                #     entropy_act[layer_idx] += tempmask.sum().item()
-                # else:
-                #     entropy_act[layer_idx] += torch.sum(entropy).item()/(entropy.shape[-1])
-                
                 reshaped_activation_abs = torch.abs(activation).view(-1, mlp_dimension)
-                # reshaped_activation = activation.view(-1, mlp_dimension)
                 if 'attention_mask' in batch:
-                    # flat_attention_mask = batch['attention_mask'].view(-1)
-                    # reshaped_activation = reshaped_activation_abs[flat_attention_mask == 1]
                     summed_activation = torch.sum(reshaped_activation_abs, dim=0)
                     avg_act_abs[layer_idx] += summed_activation
                 else:    
                     summed_activation = torch.sum(reshaped_activation_abs, dim=0)
                     summed_activation /= activation.shape[1]
                     avg_act_abs[layer_idx] += summed_activation
-                    # summed_activation = torch.sum(reshaped_activation, dim=0)
-                    # summed_activation /= activation.shape[1]
-                    # avg_act[layer_idx] += summed_activation
-            # batch_entropies = torch.stack(batch_entropies, dim=-1)
-            # all_entropies.append(batch_entropies)
             
-            # Clear memory
-            # del entropy, reshaped_activation_abs, summed_activation, batch_entropies    
+            # Clear memory  
             del input_ids, outputs, logits, reshaped_activation_abs, summed_activation
             torch.cuda.empty_cache() 
     
@@ -160,15 +142,11 @@ def convert_to_hf(model, load_path=None, ckpt_name=None, model_size="1B"):
     
     ## CONVERT TO HF-Format
     olmo_config = cfg.model
-    # n_layers = 32
     n_layers = olmo_config.n_layers
     n_heads = olmo_config.n_heads
     dim = olmo_config.d_model
     loaded = ckpt
     dims_per_head = dim // n_heads
-    # base = 10000.0
-    # inv_freq = 1.0 / (base ** (torch.arange(0, dims_per_head, 2).float() / dims_per_head))
-
 
     if olmo_config.n_kv_heads is not None:
         num_key_value_heads = olmo_config.n_kv_heads  # for GQA / MQA
